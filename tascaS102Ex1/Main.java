@@ -13,13 +13,13 @@ public class Main {
         try {
             sale.calculateTotal();
             System.out.println("Total price: $" + sale.getTotalPrice());
-        } catch (SaleBuidedException e) {
-            System.out.println("Caught SaleBuidedException: " + e.getMessage());
+        } catch (EmptySaleException e) {
+            System.out.println("Caught EmptySaleException: " + e.getMessage());
         }
 
         List<String> list = new ArrayList<>();
         try {
-            String item = list.get(0);
+            list.get(0);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Caught IndexOutOfBoundsException: " + e.getMessage());
         }

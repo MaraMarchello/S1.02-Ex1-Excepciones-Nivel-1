@@ -13,53 +13,23 @@ public class Sale {
     }
 
     public void addProduct(Product product) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
         products.add(product);
     }
 
-    public void calculateTotal() throws SaleBuidedException {
+    public void calculateTotal() throws EmptySaleException {
         if (products.isEmpty()) {
-            throw new SaleBuidedException("To make a sale you must first add products");
+            throw new EmptySaleException("To make a sale you must first add products");
         }
         
-        totalPrice = 0.0;
-        for (Product product : products) {
-            totalPrice += product.getPrice();
-        }
+        totalPrice = products.stream()
+                .mapToDouble(Product::getPrice)
+                .sum();
     }
 
     public double getTotalPrice() {
         return totalPrice;
-    }
-
-    public static void main(String[] args) {
-        Sale sale = new Sale();
-        
-        
-        try {
-            sale.calculateTotal();
-        } catch (SaleBuidedException e) {
-            System.out.println("Exception message: " + e.getMessage());
-        }
-
-        
-        sale.addProduct(new Product("Product 1", 10.0));
-        sale.addProduct(new Product("Product 2", 20.0));
-
-        
-        try {
-            sale.calculateTotal();
-            System.out.println("Total price: " + sale.totalPrice);
-        } catch (SaleBuidedException e) {
-            System.out.println(e.getMessage());
-        }
-
-        
-        try {
-            List<String> list = new ArrayList<>();
-            
-            String element = list.get(0);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("IndexOutOfBoundsException caught: " + e.getMessage());
-        }
     }
 }
